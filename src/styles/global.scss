@@ -1,0 +1,54 @@
+@import './variables.scss';
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(107.48deg, #ACCBEE -62.67%, #E7F0FD 182.63%);
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.overview {
+  @apply
+    flex
+    flex-col
+    items-center
+    justify-center
+    w-full
+    h-full
+  ;
+  max-width: 1175px;
+
+  @media (max-width: 768px) {
+    @apply justify-start;
+  }
+}
+
+.successfully {
+  &_hide {
+    transform: translateY(380px);
+  }
+
+  &_show {
+    transform: translateY(0);
+  }
+}
+
+.like-icon {
+  &:hover {
+    path {
+      stroke: #746CFF;
+    }
+  }
+
+  &_active {
+    path {
+      stroke: #746CFF;
+    }
+  }
+}
+
+.max-height-9\/10 {
+  max-height: 90%;
+}

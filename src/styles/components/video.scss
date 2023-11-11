@@ -1,0 +1,38 @@
+.video {
+  @apply
+    flex
+    justify-center
+    items-center
+    w-full
+    h-full
+    rounded-2xl
+    bg-white
+    z-20
+    relative
+    overflow-hidden
+  ;
+  padding-top: 56.25%;
+  position: relative;
+  z-index: 25;
+
+  & > div:not(.quizlet) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &_black {
+    @apply bg-gray-800;
+  }
+
+  iframe, & > div {
+    @apply w-full h-full overflow-hidden;
+  }
+
+  .plyr {
+    @apply w-full;
+    height: inherit;
+  }
+}

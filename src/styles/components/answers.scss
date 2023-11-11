@@ -1,0 +1,9 @@
+.answers {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(2,48%);
+  row-gap: 16px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 24px;
+}
