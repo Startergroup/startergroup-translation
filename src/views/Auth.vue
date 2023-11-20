@@ -51,17 +51,28 @@
 <!--            >-->
 <!--          </div>-->
 
-          <div class="flex flex-col w-full mb-8">
+          <div class="flex flex-col w-full mb-4">
             <label class="text-sm text-black font-normal mb-1 ml-2">{{ $t('message.code') }}</label>
             <div class="flex items-center gap-2 w-full">
-              <input
-                v-model="code"
-                type="password"
-                :class="['input', { 'input_error' : error }]"
-                required
-                :placeholder="$t('message.code')"
-                @focus="error = ''"
-              >
+              <div class="relative w-full">
+                <input
+                  v-model="code"
+                  :type="showCode ? 'text' : 'password'"
+                  :class="['input', { 'input_error' : error }]"
+                  required
+                  :placeholder="$t('message.code')"
+                  @focus="error = ''"
+                >
+
+                <icon-base
+                  :name="showCode ? 'eye-off' : 'eye'"
+                  :width="18"
+                  :height="15"
+                  :view-box-size="[20, 18]"
+                  class="absolute inset-y-0 my-auto right-2 z-10 cursor-pointer"
+                  @click="showCode = !showCode"
+                />
+              </div>
 
               <div class="tooltip">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,12 +87,29 @@
             </div>
           </div>
 
-         <div class="flex flex-col w-full">
-           <Button
-             classes="button_primary"
-             :value="$t('message.enterButton')"
-             @on-click="login"
-           />
+          <div class="flex items-center w-full mb-8">
+            <checkbox
+              :model-value="agreementAccepted"
+              @update:modelValue="agreementAccepted = $event"
+            >
+              <template #label>
+                <p
+                  class="text-sm"
+                  @click="openPersonalDataModal"
+                >
+                  Я согласен на обработку
+                  <span class="text-blue-400 underline cursor-pointer">персональных данных</span>
+                </p>
+              </template>
+            </checkbox>
+          </div>
+
+          <div class="flex flex-col w-full">
+            <Button
+              classes="button_primary"
+              :value="$t('message.enterButton')"
+              @on-click="login"
+            />
          </div>
         </form>
       </div>
@@ -93,8 +121,11 @@
 
 <script>
 import Button from '@/components/UI/Button'
+import Checkbox from '@/components/UI/Checkbox.vue'
+import IconBase from '@/components/Icons/IconBase.vue'
 import LearningIcon from '@/assets/svg/learning.svg'
 import Localization from '@/components/Localization'
+import PersonalData from '@/components/Modals/PersonalData.vue'
 
 import { mapActions, mapState } from 'vuex'
 
@@ -102,15 +133,19 @@ export default {
   name: 'Auth',
   components: {
     Button,
+    Checkbox,
+    IconBase,
     Localization
   },
   data () {
     return {
+      agreementAccepted: false,
       LearningIcon,
-      email: null,
+      email: 'example@example.com',
       name: null,
       code: null,
-      error: null
+      error: null,
+      showCode: false
     }
   },
   computed: {
@@ -143,9 +178,20 @@ export default {
           return
         }
 
+        if (!this.validatingEmail()) {
+          this.error = 'Некорректный email.'
+          return
+        }
+
+        if (!this.agreementAccepted) {
+          this.error = 'Примите соглашение об обработке персональных данных'
+          return
+        }
+
         const { success, message } = await this.onAuth({
-          code: this.code,
-          name: this.name
+          code: this.code.trim(),
+          name: this.name,
+          email: this.email
         })
 
         if (!success) {
@@ -156,6 +202,15 @@ export default {
       } catch (error) {
         this.error = error
       }
+    },
+    validatingEmail () {
+      const regExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      return this.email.match(regExp)
+    },
+    openPersonalDataModal () {
+      this.$vfm.show({
+        component: PersonalData
+      })
     }
   }
 }

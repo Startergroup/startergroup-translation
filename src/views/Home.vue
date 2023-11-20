@@ -81,6 +81,7 @@ import Switch from '@/components/UI/Switch'
 import Video from '@/components/Video'
 
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+import { sessionStorageNames } from '@/constants/sessionStorage'
 
 export default {
   name: 'Home',
@@ -100,7 +101,8 @@ export default {
       isCinemaMode: false,
       isCommentsOpen: false,
       isQuizOpen: false,
-      quizzes: null
+      quizzes: null,
+      timerID: null
     }
   },
   computed: {
@@ -118,13 +120,35 @@ export default {
       }
     }
   },
+  unmounted () {
+    clearInterval(this.timerID)
+  },
+  async mounted () {
+    await this.getTabs()
+
+    this.timerID = setInterval(async () => {
+      await this.getTabs()
+    }, 10000)
+
+    const selectedTab = JSON.parse(sessionStorage.getItem(sessionStorageNames.selectedTab))
+    if (selectedTab) {
+      this.selectTab(selectedTab)
+    }
+  },
   methods: {
     ...mapActions('quiz', [
       'getQuizzes',
       'sendQuiz'
     ]),
+    ...mapActions([
+      'getTabs'
+    ]),
     ...mapMutations('quiz', [
       'setQuizzes'
+    ]),
+    ...mapMutations([
+      'selectTab',
+      'setTabs'
     ]),
     async finishQuiz (result) {
       const payload = {

@@ -45,6 +45,7 @@ export default {
       'currentTab'
     ]),
     videoURL () {
+      console.debug(this.$refs.plyr)
       return this.currentTab.url
     }
   }

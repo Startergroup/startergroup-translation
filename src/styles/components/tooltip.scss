@@ -11,7 +11,9 @@
   transition: .25s ease-in-out;
   position: relative;
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     background: rgba(#454545, 1);
 
     .tooltip-content {

@@ -1,5 +1,5 @@
 <template>
-  <form action="" class="introduction__form">
+  <form action="" class="flex-col introduction__form gap-4">
     <button
       class="introduction__button button button_primary"
       @click.prevent="handleClick"
