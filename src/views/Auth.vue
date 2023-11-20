@@ -87,22 +87,22 @@
             </div>
           </div>
 
-          <div class="flex items-center w-full mb-8">
-            <checkbox
-              :model-value="agreementAccepted"
-              @update:modelValue="agreementAccepted = $event"
-            >
-              <template #label>
-                <p
-                  class="text-sm"
-                  @click="openPersonalDataModal"
-                >
-                  Я согласен на обработку
-                  <span class="text-blue-400 underline cursor-pointer">персональных данных</span>
-                </p>
-              </template>
-            </checkbox>
-          </div>
+<!--          <div class="flex items-center w-full mb-8">-->
+<!--            <checkbox-->
+<!--              :model-value="agreementAccepted"-->
+<!--              @update:modelValue="agreementAccepted = $event"-->
+<!--            >-->
+<!--              <template #label>-->
+<!--                <p-->
+<!--                  class="text-sm"-->
+<!--                  @click="openPersonalDataModal"-->
+<!--                >-->
+<!--                  Я согласен на обработку-->
+<!--                  <span class="text-blue-400 underline cursor-pointer">персональных данных</span>-->
+<!--                </p>-->
+<!--              </template>-->
+<!--            </checkbox>-->
+<!--          </div>-->
 
           <div class="flex flex-col w-full">
             <Button
@@ -121,7 +121,6 @@
 
 <script>
 import Button from '@/components/UI/Button'
-import Checkbox from '@/components/UI/Checkbox.vue'
 import IconBase from '@/components/Icons/IconBase.vue'
 import LearningIcon from '@/assets/svg/learning.svg'
 import Localization from '@/components/Localization'
@@ -133,7 +132,6 @@ export default {
   name: 'Auth',
   components: {
     Button,
-    Checkbox,
     IconBase,
     Localization
   },
@@ -183,10 +181,10 @@ export default {
           return
         }
 
-        if (!this.agreementAccepted) {
-          this.error = 'Примите соглашение об обработке персональных данных'
-          return
-        }
+        // if (!this.agreementAccepted) {
+        //   this.error = 'Примите соглашение об обработке персональных данных'
+        //   return
+        // }
 
         const { success, message } = await this.onAuth({
           code: this.code.trim(),
