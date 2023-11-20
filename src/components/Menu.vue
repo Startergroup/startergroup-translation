@@ -1,7 +1,7 @@
 <template>
   <div
     class="menu"
-    @click="isOpen = true"
+    @click="onOpenMenuHandler"
   >
     <IconBase
       name="menu"
@@ -23,7 +23,7 @@
 
         <div class="flex flex-col mt-10 pl-6 w-full">
           <Button
-            v-for="(item, index) in tabs"
+            v-for="(item, index) in getSortedTabs"
             :key="index"
             :classes="[
               'button button_empty rounded-l-3xl rounded-r-none justify-start pl-5',
@@ -69,7 +69,8 @@ import IconBase from '@/components/Icons/IconBase'
 import Sidebar from '@/components/UI/Sidebar'
 import VoteModal from '@/components/Modals/VoteModal'
 
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { sessionStorageNames } from '@/constants/sessionStorage'
 
 export default {
   name: 'Menu',
@@ -140,6 +141,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'getSortedTabs'
+    ]),
     ...mapState([
       'tabs',
       'selectedTabId'
@@ -157,14 +161,7 @@ export default {
       return `${str}<span class="text-primary">/</span> ${num}`
     }
   },
-  async updated () {
-    await this.updateTabsHandler()
-  },
-  async mounted () {
-    await this.updateTabsHandler()
-  },
   methods: {
-    ...mapActions(['getTabs']),
     ...mapActions('auth', [
       'logout'
     ]),
@@ -176,13 +173,14 @@ export default {
       this.logout()
       this.$router.push('/auth')
     },
+    async onOpenMenuHandler () {
+      this.isOpen = true
+    },
     selectTabHandler (id) {
+      sessionStorage.setItem(sessionStorageNames.selectedTab, JSON.stringify(id))
+
       this.selectTab(id)
       this.isOpen = false
-    },
-    async updateTabsHandler () {
-      const tabs = await this.getTabs()
-      this.setTabs(tabs)
     }
   }
 }

@@ -42,11 +42,12 @@ export default {
     }
   },
   actions: {
-    async onAuth ({ commit }, { code, name }) {
+    async onAuth ({ commit }, { code, name, email }) {
       const response = await Api.post(`${apiVersion}/user/login`, {
         data: {
           code,
           name,
+          email,
           last_activity: null
         }
       })
