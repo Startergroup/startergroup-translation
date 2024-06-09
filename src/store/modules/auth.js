@@ -43,27 +43,59 @@ export default {
   },
   actions: {
     async onAuth ({ commit }, { code, name, email }) {
-      const response = await Api.post(`${apiVersion}/user/login`, {
-        data: {
-          code,
-          name,
-          email,
-          last_activity: null
-        }
-      })
+      try {
+        const response = await Api.post(`${apiVersion}/user/login`, {
+          data: {
+            code,
+            name,
+            email,
+            last_activity: null
+          }
+        })
 
-      if (response?.success) {
-        commit('setUser', response.data)
-        commit('saveState')
+        if (response?.success) {
+          commit('setUser', response.data)
+          commit('saveState')
 
-        return {
-          success: true
+          return {
+            success: true
+          }
+        } else {
+          return {
+            success: false,
+            message: response?.message
+          }
         }
-      } else {
-        return {
-          success: false,
-          message: response?.message
+      } catch (error) {
+        console.error(error)
+        alert(error)
+      }
+    },
+    async onGuestAuth ({ commit }, { email, name }) {
+      try {
+        const response = await Api.post(`${apiVersion}/user/guest_login`, {
+          data: {
+            name,
+            email,
+            isGuest: true
+          }
+        })
+
+        if (response?.success) {
+          commit('setUser', response.data)
+          commit('saveState')
+
+          return {
+            success: true
+          }
+        } else {
+          return {
+            success: false,
+            message: response?.message
+          }
         }
+      } catch (error) {
+        console.debug(error)
       }
     },
     async checkTokens ({ commit, state }) {
@@ -108,7 +140,7 @@ export default {
       })
     },
     async logout ({ state, commit }) {
-      await Api.get(`${apiVersion}/user/auth/logout`, { code: state.code })
+      await Api.get(`${apiVersion}/user/auth/logout`, { code: state.user.code })
 
       commit('setTokens', { accessToken: null, refreshToken: null, expires: null })
       commit('setCode', null)

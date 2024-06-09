@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import IconBase from '@/components/Icons/IconBase'
-import Sidebar from '@/components/UI/Sidebar'
+import IconBase from '@/components/Icons/IconBase.vue'
+import Sidebar from '@/components/UI/Sidebar.vue'
 
 export default {
   name: 'Schedule',

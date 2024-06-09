@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-row justify-between items-center w-full rounded-2xl bg-white px-8 py-2 z-20 relative">
+  <div
+    v-if="icons.length"
+    class="flex flex-row justify-between items-center w-full rounded-2xl bg-white px-8 py-2 z-20 relative"
+  >
     <p
       v-if="currentTab"
       class="text-base text-secondary-2 font-medium"
@@ -34,9 +37,9 @@
 </template>
 
 <script>
-import Button from '@/components/UI/Button'
-import IconBase from '@/components/Icons/IconBase'
-import VoteModal from '@/components/Modals/VoteModal'
+import Button from '@/components/UI/Button.vue'
+import IconBase from '@/components/Icons/IconBase.vue'
+import VoteModal from '@/components/Modals/VoteModal.vue'
 
 import { mapGetters, mapState } from 'vuex'
 
@@ -46,16 +49,22 @@ export default {
     Button,
     IconBase
   },
+  emits: ['open:quiz', 'open:schedule', 'open:comments'],
   computed: {
     ...mapState([
-      'selectedTabId'
+      'selectedTabId',
+      'quiz'
     ]),
+    ...mapState('auth', ['user']),
+    ...mapState('quiz', ['quizzes']),
+    ...mapState('vote', ['votes']),
     ...mapGetters([
       'currentTab'
     ]),
     icons () {
       return [
         {
+          hide: !this.quizzes.every(item => item.is_active) || !this.quizzes.length,
           name: 'quiz',
           classes: 'button_primary rounded-full w-10',
           hint: 'Квиз',
@@ -71,6 +80,7 @@ export default {
           }
         },
         {
+          hide: this.user.isGuest,
           name: 'question',
           classes: 'button_primary rounded-full w-10',
           hint: 'Задать вопрос',
@@ -87,6 +97,21 @@ export default {
           }
         },
         {
+          hide: !this.currentTab || this.user.isGuest,
+          name: 'calendar',
+          classes: `button_primary rounded-full w-10 ${this.currentTab ? (this.currentTab.schedule ? '' : 'button_disable') : 'button_disable'}`,
+          hint: 'Расписание',
+          width: 24,
+          height: 24,
+          viewBoxSize: [24, 24],
+          title: this.$t('message.chatTitle'),
+          onClick: () => {
+            if (!this.selectedTabId) return
+            this.$emit('open:schedule')
+          }
+        },
+        {
+          hide: !this.currentTab || this.votes.success === false || this.user.isGuest,
           name: 'survey',
           classes: `button_primary rounded-full w-10 ${!this.selectedTabId && 'button_disable'}`,
           hint: 'Голосование',
@@ -105,7 +130,7 @@ export default {
             })
           }
         }
-      ]
+      ].filter(item => !item.hide)
     }
   }
 }

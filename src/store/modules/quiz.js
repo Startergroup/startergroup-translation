@@ -6,7 +6,7 @@ export default {
   state: {
     attemptCount: 0,
     isPassed: false,
-    quizzes: null,
+    quizzes: [],
     selectedQuizId: null
   },
   getters: {

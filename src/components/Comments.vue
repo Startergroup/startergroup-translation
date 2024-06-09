@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import Button from '@/components/UI/Button'
-import Sidebar from '@/components/UI/Sidebar'
+import Button from '@/components/UI/Button.vue'
+import Sidebar from '@/components/UI/Sidebar.vue'
 
 import { getDatabase, ref, set } from 'firebase/database'
 import { v4 as uuidv4 } from 'uuid'

@@ -2,9 +2,15 @@
   <div class="introduction">
     <img
       v-if="logo"
-      :src="`https://streamus.online/uploads/${logoURL}`"
+      :src="`https://streamus.online/uploads/${getFormattedLogoURL}`"
       class="introduction__logo mb-8 mr-auto"
       alt="logo"
+    >
+
+    <img
+      v-if="introImg.length"
+      :src="`https://streamus.online/uploads/${getFormattedIntroImgUrl}`"
+      class="intro-img"
     >
 
     <h2 class="introduction__title text-center">{{ title }}</h2>
@@ -15,7 +21,7 @@
     />
 
     <span class="text-sm font-medium text-gray-400 text-center mt-8">
-      Подтверждаю, что согласен передать свои данные (ФИО, email) организатору квиза ООО "Отус онлайн-образование"
+      {{ agreement }}
     </span>
   </div>
 </template>
@@ -31,13 +37,27 @@ export default {
     logo: {
       type: String,
       default: null
+    },
+    agreement: {
+      type: String,
+      required: true
+    },
+    introImg: {
+      type: String,
+      default: null
     }
   },
   computed: {
-    logoURL () {
+    getFormattedLogoURL () {
       if (!this.logo) return ''
 
       const array = this.logo.split('/')
+      return array[array.length - 1]
+    },
+    getFormattedIntroImgUrl () {
+      if (!this.introImg) return ''
+
+      const array = this.introImg.split('/')
       return array[array.length - 1]
     }
   },
@@ -49,3 +69,10 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.intro-img {
+  width: 100%;
+  max-height: 240px;
+}
+</style>

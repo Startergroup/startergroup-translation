@@ -18,19 +18,17 @@ class Api {
     const result = await this.#client({
       method,
       headers: {
-        Authorization: `Bearer ${store.state.auth.user?.accessToken}`
+        Authorization: `Bearer ${store.state.auth.user?.access_token}`
       },
       url,
       params,
       data
     }).catch(error => {
-      if (error.response.status === 403) {
-        store.commit('auth/setTokens', {
-          accessToken: null,
-          refreshToken: null
-        })
-        router.push('/auth')
-      }
+      store.commit('auth/setTokens', {
+        accessToken: null,
+        refreshToken: null
+      })
+      window.location.href='/#/auth'
     })
 
     return result?.data

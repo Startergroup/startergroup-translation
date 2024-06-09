@@ -1,8 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { checkAuth } from './midlwares/auth.midleware'
 
-import Auth from '@/views/Auth'
-import Home from '@/views/Home'
+import Auth from '@/views/Auth.vue'
+import GuestAuth from '@/views/GuestAuth.vue'
+import Home from '@/views/Home.vue'
 
 const routes = [
   {
@@ -20,11 +21,19 @@ const routes = [
     meta: {
       protected: true
     }
+  },
+  {
+    path: '/kviz',
+    name: 'Guest auth',
+    component: GuestAuth,
+    meta: {
+      protected: false
+    }
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 

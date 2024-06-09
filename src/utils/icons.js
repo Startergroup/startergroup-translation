@@ -77,5 +77,19 @@ export default {
       <path d="M1.20057 7.78442C0.933139 7.2954 0.933144 6.70445 1.20058 6.21544C2.9 3.10803 6.20336 1 9.99997 1C13.7966 1 17.1 3.10809 18.7994 6.21558C19.0669 6.7046 19.0669 7.29555 18.7994 7.78456C17.1 10.892 13.7966 13 10 13C6.20336 13 2.89997 10.8919 1.20057 7.78442Z" stroke="#2B3F6C" stroke-width="1.5"/>
       <circle cx="10" cy="7" r="3" stroke="#2B3F6C" stroke-width="1.5"/>
     </svg>
+  `,
+  calendar: `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="3.5" width="18" height="18" rx="5" stroke="#FFF" stroke-width="1.5"/>
+      <path d="M3 8.5H21" stroke="#FFF" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M16.5 2L16.5 5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7.5 2L7.5 5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6.5 12.5H7.5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.5 12.5H12.5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16.5 12.5H17.5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6.5 16.5H7.5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.5 16.5H12.5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16.5 16.5H17.5" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   `
 }
