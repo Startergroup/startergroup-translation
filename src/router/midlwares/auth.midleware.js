@@ -2,10 +2,15 @@ import store from '../../store'
 
 export async function checkAuth (to, from, next) {
   const timer = store.state.auth.timer
+  const user = store.state.auth.user
 
   if (to.matched.some(record => record.meta.protected)) {
     if (timer) {
       clearInterval(timer)
+    }
+
+    if (user.isGuest) {
+      return next()
     }
 
     if (store.getters['auth/isLogged']) {

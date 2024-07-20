@@ -4,7 +4,7 @@ import { apiVersion } from '@/api/api.config'
 export default {
   namespaced: true,
   state: {
-    votes: null
+    votes: {}
   },
   mutations: {
     setVotes (state, votes) {

@@ -10,7 +10,6 @@
     h-10
     bg-transparent
     cursor-pointer
-    transition
     transition-all
     duration-300
     ease-out
@@ -64,8 +63,14 @@
           text-primary
         ;
 
-        path {
-          stroke: #6C63FF;
+        path, rect {
+          &[stroke] {
+            stroke: #6C63FF;
+          }
+
+          &[fill] {
+            fill: #6C63FF;
+          }
         }
       }
     }
@@ -92,5 +97,7 @@
       bg-gray-300
       border-gray-300
     ;
+    user-select: none;
+    cursor: default;
   }
 }

@@ -23,7 +23,7 @@
       v-else
       class="sx:text-2xl text-base font-semibold text-white px-4 md:p-0 flex items-center justify-center absolute left-0 top-0 bottom-0 right-0"
     >
-      {{ $t('message.videoHint') }}
+      {{ user.isGuest ? $t('message.videoHintGuestUser') : $t('message.videoHint') }}
     </span>
 
     <slot name="overview" />
@@ -32,7 +32,7 @@
 
 <script>
 import VuePlyr from 'vue-plyr'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import 'vue-plyr/dist/vue-plyr.css'
 
 export default {
@@ -41,6 +41,7 @@ export default {
     VuePlyr
   },
   computed: {
+    ...mapState('auth', ['user']),
     ...mapGetters([
       'currentTab'
     ]),

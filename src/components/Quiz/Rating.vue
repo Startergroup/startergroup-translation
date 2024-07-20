@@ -5,7 +5,7 @@
   >
     <img
       v-if="logoUrl"
-      :src="`https://streamus.online/uploads/${logoUrl}`"
+      :src="`https://streamus.online/uploads/${getFormattedLogoURL}`"
       alt="logo"
       class="introduction__logo flex mr-auto mb-8"
     >
@@ -90,6 +90,12 @@ export default {
         ...this.rating[getUserIndex],
         number: (getUserIndex + 1)
       }
+    },
+    getFormattedLogoURL () {
+      if (!this.logoUrl) return ''
+
+      const array = this.logoUrl.split('/')
+      return array[array.length - 1]
     }
   },
   watch: {

@@ -10,8 +10,10 @@
         class="quizlet__wrapper"
       >
         <Introduction
-          :title="quizlet.introductionText"
+          :title="quizlet.introduction_text"
+          :intro-img="quizlet.introduction_img"
           :logo="quizlet.logo"
+          :agreement="quizlet.agreement"
           @startGame="startGame"
         >
           <template #form="{ startQuizlet }">
@@ -47,11 +49,12 @@
           :img="currentQuestion.img"
         />
 
-        <div class="answers">
+        <div :class="['answers', { 'grid-cols-1' : currentQuestion.free_answer }]">
           <Answer
-            v-for="(answer, index) in currentQuestion.answers"
+            v-for="(answer, index) in currentQuestion.answers.filter(item => item.is_free_answer === currentQuestion.free_answer)"
             :key="index"
             :answer="answer"
+            :question="currentQuestion"
             @onClick="selectAnswer($event)"
           />
         </div>
@@ -74,7 +77,7 @@
         class="flex mb-auto"
       >
         <Rating
-          :logo-url="quizlet.logoURL"
+          :logo-url="quizlet.logo"
           :quiz-id="quizlet.quiz_id"
           :user-id="user.code_id"
         />
@@ -92,12 +95,12 @@
 
 <script>
 import Answer from './Answer.vue'
-import IconBase from '@/components/Icons/IconBase'
+import IconBase from '@/components/Icons/IconBase.vue'
 import Introduction from './Introduction.vue'
 import Question from './Question.vue'
 import ProgressBar from './ProgressBar.vue'
 import Timer from './Timer.vue'
-import Rating from './Rating'
+import Rating from './Rating.vue'
 
 import { mapState, mapMutations } from 'vuex'
 
@@ -144,7 +147,7 @@ export default {
       if (!this.quizlet) return {}
 
       return {
-        background: `${this.quizlet.bgColor}`
+        background: `${this.quizlet.background}`
       }
     },
     getLogoURL () {

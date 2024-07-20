@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Switch from '@/components/UI/Switch'
+import Switch from '@/components/UI/Switch.vue'
 
 export default {
   name: 'Localization',

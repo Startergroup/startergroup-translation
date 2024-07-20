@@ -15,7 +15,7 @@
 
     <div class="flex flex-col justify-center items-center h-full lg:w-1/2 w-full px-4 lg:px-0 bg-white relative">
       <div class="flex flex-col lg:w-328 w-full max-w-328 shadow-md-y-0 px-5 py-6 bg-white rounded-2xl">
-        <h2 class="text-xl font-normal text-black mb-6">{{ $t('message.authTitle') }}</h2>
+        <h2 class="text-xl font-normal text-black mb-6">{{ $t('message.guestAuthTitle') }}</h2>
 
         <div
           v-show="error"
@@ -29,6 +29,7 @@
         <form class="flex flex-col">
           <div class="flex flex-col w-full mb-4">
             <label class="text-sm text-black font-normal mb-1 ml-2">{{ $t('message.name') }}</label>
+
             <input
               v-model="name"
               type="text"
@@ -40,39 +41,16 @@
           </div>
 
           <div class="flex flex-col w-full mb-4">
-            <label class="text-sm text-black font-normal mb-1 ml-2">{{ $t('message.code') }}</label>
-            <div class="flex items-center gap-2 w-full">
-              <div class="relative w-full">
-                <input
-                  v-model="code"
-                  :type="showCode ? 'text' : 'password'"
-                  :class="['input', { 'input_error' : error }]"
-                  required
-                  :placeholder="$t('message.code')"
-                  @focus="error = ''"
-                >
+            <label class="text-sm text-black font-normal mb-1 ml-2">{{ $t('message.name') }}</label>
 
-                <icon-base
-                  :name="showCode ? 'eye-off' : 'eye'"
-                  :width="18"
-                  :height="15"
-                  :view-box-size="[20, 18]"
-                  class="absolute inset-y-0 my-auto right-2 z-10 cursor-pointer"
-                  @click="showCode = !showCode"
-                />
-              </div>
-
-              <div class="tooltip">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 11.875V11.25C10.4945 11.25 10.9778 11.1034 11.3889 10.8287C11.8 10.554 12.1205 10.1635 12.3097 9.70671C12.4989 9.24989 12.5484 8.74723 12.452 8.26228C12.3555 7.77732 12.1174 7.33187 11.7678 6.98223C11.4181 6.6326 10.9727 6.3945 10.4877 6.29804C10.0028 6.20157 9.50011 6.25108 9.04329 6.4403C8.58648 6.62952 8.19603 6.94995 7.92133 7.36108C7.64662 7.7722 7.5 8.25555 7.5 8.75" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M10 15C10.3452 15 10.625 14.7202 10.625 14.375C10.625 14.0298 10.3452 13.75 10 13.75C9.65482 13.75 9.375 14.0298 9.375 14.375C9.375 14.7202 9.65482 15 10 15Z" fill="#fff"/>
-                </svg>
-
-                <div class="tooltip-content">
-                  {{ $t('message.codeHint') }}
-                </div>
-              </div>
-            </div>
+            <input
+              v-model="email"
+              type="text"
+              :class="['input', { 'input_error' : error }]"
+              required
+              :placeholder="$t('message.email')"
+              @focus="error = ''"
+            >
           </div>
 
           <div class="flex flex-col w-full">
@@ -81,7 +59,7 @@
               :value="$t('message.enterButton')"
               @click="login"
             />
-         </div>
+          </div>
         </form>
       </div>
 
@@ -92,7 +70,6 @@
 
 <script>
 import Button from '@/components/UI/Button.vue'
-import IconBase from '@/components/Icons/IconBase.vue'
 import LearningIcon from '@/assets/svg/learning.svg'
 import Localization from '@/components/Localization.vue'
 import PersonalData from '@/components/Modals/PersonalData.vue'
@@ -100,10 +77,9 @@ import PersonalData from '@/components/Modals/PersonalData.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'Auth',
+  name: 'GuestAuth',
   components: {
     Button,
-    IconBase,
     Localization
   },
   data () {
@@ -112,7 +88,6 @@ export default {
       LearningIcon,
       email: 'example@example.com',
       name: null,
-      code: null,
       error: null,
       showCode: false
     }
@@ -138,17 +113,16 @@ export default {
   },
   methods: {
     ...mapActions('auth', [
-      'onAuth'
+      'onGuestAuth'
     ]),
     async login () {
       try {
-        if (!(this.name && this.code)) {
+        if (!(this.name && this.email)) {
           this.error = 'Не заполнены все обязательные поля.'
           return
         }
 
-        const { success, message } = await this.onAuth({
-          code: this.code.trim(),
+        const { success, message } = await this.onGuestAuth({
           name: this.name,
           email: this.email
         })

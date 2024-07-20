@@ -2,7 +2,7 @@
   <Sidebar
     :is-open="isOpen"
     :is-left="true"
-    width="260px"
+    width="300px"
     @update:is-open="$emit('update:quiz', $event)"
   >
     <template #default>
@@ -25,11 +25,11 @@
         </div>
 
         <div
-          v-else-if="quizzes && quizzes.length"
+          v-else-if="filteredQuizzes && filteredQuizzes.length"
           class="flex flex-col mt-6"
         >
           <Button
-            v-for="item in quizzes"
+            v-for="item in filteredQuizzes"
             :key="item.quiz_id"
             :classes="[
               'button button_empty rounded-l-3xl rounded-r-none justify-start pl-5 py-2 h-auto',
@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import Button from '@/components/UI/Button'
-import Sidebar from '@/components/UI/Sidebar'
+import Button from '@/components/UI/Button.vue'
+import Sidebar from '@/components/UI/Sidebar.vue'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 
 import { mapState, mapMutations } from 'vuex'
@@ -80,7 +80,10 @@ export default {
     ...mapState('quiz', [
       'quizzes',
       'selectedQuizId'
-    ])
+    ]),
+    filteredQuizzes () {
+      return this.quizzes.filter(item => item.is_active)
+    }
   },
   methods: {
     ...mapMutations('quiz', [
