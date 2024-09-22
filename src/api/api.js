@@ -24,11 +24,12 @@ class Api {
       params,
       data
     }).catch(error => {
-      store.commit('auth/setTokens', {
-        accessToken: null,
-        refreshToken: null
-      })
-      window.location.href='/#/auth'
+      console.debug(error)
+      // store.commit('auth/setTokens', {
+      //   accessToken: null,
+      //   refreshToken: null
+      // })
+      // window.location.href='/#/auth'
     })
 
     return result?.data
