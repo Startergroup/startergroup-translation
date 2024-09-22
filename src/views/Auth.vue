@@ -5,12 +5,6 @@
         <h2 v-html="getTitle" class="text-6xl font-bold text-black text-center mb-2"></h2>
         <p class="text-lg font-regular text-black text-center">{{ getSubtitle }}</p>
       </div>
-
-      <img
-        :src="LearningIcon"
-        alt="learning"
-        class=""
-      >
     </div>
 
     <div class="flex flex-col justify-center items-center h-full lg:w-1/2 w-full px-4 lg:px-0 bg-white relative">
