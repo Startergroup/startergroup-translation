@@ -19,7 +19,7 @@ export default {
     const faviconName = favicon[favicon.length - 1]
 
     document.title = settings[`title_${this.$i18n.locale}`]
-    document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamus.online/uploads/${faviconName}`)
+    document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamos.ru/uploads/${faviconName}`)
   },
   created () {
     const userData = localStorage.getItem('streamusUserData')

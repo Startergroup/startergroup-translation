@@ -5,7 +5,7 @@
   >
     <img
       v-if="logoUrl"
-      :src="`https://streamus.online/uploads/${getFormattedLogoURL}`"
+      :src="`https://streamos.ru/uploads/${getFormattedLogoURL}`"
       alt="logo"
       class="introduction__logo flex mr-auto mb-8"
     >

@@ -8,7 +8,7 @@
 
     <img
       v-if="answer.img"
-      :src="`https://streamus.online/uploads/${url}`"
+      :src="`https://streamos.ru/uploads/${url}`"
       alt=""
       style="max-height: 150px;"
     >

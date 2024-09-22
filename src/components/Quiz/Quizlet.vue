@@ -32,7 +32,7 @@
         <header class="quizlet__header">
           <img
             v-if="quizlet.logo"
-            :src="`https://streamus.online/uploads/${getLogoURL}`"
+            :src="`https://streamos.ru/uploads/${getLogoURL}`"
             alt="Logo"
             class="logo"
           >

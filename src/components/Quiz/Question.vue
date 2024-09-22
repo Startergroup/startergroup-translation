@@ -4,7 +4,7 @@
 
     <img
       v-if="img"
-      :src="`https://streamus.online/uploads/${url}`"
+      :src="`https://streamos.ru/uploads/${url}`"
       alt="question-image"
       class="question__img"
     >

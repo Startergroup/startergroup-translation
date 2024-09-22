@@ -2,14 +2,14 @@
   <div class="introduction">
     <img
       v-if="logo"
-      :src="`https://streamus.online/uploads/${getFormattedLogoURL}`"
+      :src="`https://streamos.ru/uploads/${getFormattedLogoURL}`"
       class="introduction__logo mb-8 mr-auto"
       alt="logo"
     >
 
     <img
       v-if="introImg.length"
-      :src="`https://streamus.online/uploads/${getFormattedIntroImgUrl}`"
+      :src="`https://streamos.ru/uploads/${getFormattedIntroImgUrl}`"
       class="intro-img"
     >
 
