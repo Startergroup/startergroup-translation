@@ -25,11 +25,14 @@ class Api {
       data
     }).catch(error => {
       console.debug(error)
-      // store.commit('auth/setTokens', {
-      //   accessToken: null,
-      //   refreshToken: null
-      // })
-      // window.location.href='/#/auth'
+
+      if (error.response.status === 403) {
+        store.commit('auth/setTokens', {
+          accessToken: null,
+          refreshToken: null
+        })
+        window.location.href='/#/auth'
+      }
     })
 
     return result?.data
